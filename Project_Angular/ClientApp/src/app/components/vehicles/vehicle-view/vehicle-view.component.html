@@ -1,0 +1,175 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+
+    <mat-card-title>Vehicle</mat-card-title>
+    <mat-card-subtitle>List of Vehicle</mat-card-subtitle>
+
+  </mat-card-header>
+  <mat-card-content>
+    <mat-divider></mat-divider>
+    <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: baseline;">
+      <mat-form-field>
+        <input matInput
+               (keyup)="applyFilter($event.target.value)"
+               placeholder="Search" />
+      </mat-form-field>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        
+        <a mat-menu-item [routerLink]="['/vehicle-add']">
+          <mat-icon>add</mat-icon>
+          <span>Create New Vehicle</span>
+        </a>
+
+      </mat-menu>
+    </div>
+    <table mat-table
+           #outerSort="matSort"
+           [dataSource]="dataSource"
+           multiTemplateDataRows
+           matSort>
+
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-flat-button (click)="toggleRow(element)">
+            <mat-icon>
+              {{
+          expandedElement === element ? "expand_less" : "expand_more"
+              }}
+            </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="MakeBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>MakeBy</th>
+        <td mat-cell *matCellDef="let element">{{ element.MakeBy }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Color">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Color</th>
+        <td mat-cell *matCellDef="let element">{{ element.Color }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Condition">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Condition</th>
+        <td mat-cell *matCellDef="let element">{{ element.Condition }}</td>
+      </ng-container>
+      <ng-container matColumnDef="MakeDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Make Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.MakeDate|date: 'yyyy-MMM-dd' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Mileage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mileage</th>
+        <td mat-cell *matCellDef="let element">{{ element.Mileage }}</td>
+      </ng-container>
+      <ng-container matColumnDef="VINNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>VINNumber</th>
+        <td mat-cell *matCellDef="let element">{{ element.VINNumber }}</td>
+      </ng-container>
+      <ng-container matColumnDef="IsHold">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>IsHold</th>
+        <td mat-cell *matCellDef="let element">{{ element.IsHold? 'Yes':'No' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Note">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Note</th>
+        <td mat-cell *matCellDef="let element">{{ element.Note }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>...</th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-icon-button color="primary" [routerLink]="['/vehicle-edit', element.VehicleId]">
+            <mat-icon>edit</mat-icon>
+          </a>&nbsp;
+          <button mat-icon-button color="warn" (click)="confirmDelete(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell
+            *matCellDef="let element"
+            [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail"
+               *ngIf="element.ServiceRecord?.data.length"
+               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+
+            <div class="inner-table mat-elevation-z8" *ngIf="expandedElement">
+
+              <mat-card-subtitle style="">Courses</mat-card-subtitle>
+              <mat-divider></mat-divider>
+              <table #innerTables
+                     mat-table
+                     #innerSort="matSort"
+                     [dataSource]="element.ServiceRecord"
+                     matSort>
+
+                <ng-container matColumnDef="ServiceBy">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Service By
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ServiceBy }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ServiceCharge">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Service Charge
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ServiceCharge| currency:'৳ '}}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ConditionDescr">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Condition Descr.
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.ConditionDescr }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="IsDelivered">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Is Delivered?
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.IsDelivered? 'Yes': 'No' }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>...</th>
+                  <td mat-cell *matCellDef="let element">
+                    <a mat-icon-button color="primary" [routerLink]="['/service-edit', element.ServiceRecordId]">
+                      <mat-icon>edit</mat-icon>
+                    </a>&nbsp;
+                    <button mat-icon-button color="warn" (click)="confirmDeleteService(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
+                <tr mat-row
+                    *matRowDef="let row; columns: innerDisplayedColumns"></tr>
+              </table>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row
+          *matRowDef="let element; columns: columnsToDisplay"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="example-detail-row"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+
+</mat-card>
+<!-- <div style="position: absolute;right: 35px;bottom: 1px;">
+  <button mat-mini-fab color="primary" >
+    <mat-icon>add</mat-icon>
+    </button>
+</div> -->

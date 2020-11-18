@@ -1,0 +1,39 @@
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.form-group {
+  width: 60%;
+}
+
+.f-w {
+  padding: 10px 15px;
+  width: calc(100% - 30px);
+}
+
+.f-w-2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 15px;
+  
+  width: calc(100% - 30px);
+}
+
+.f-30 {
+  width: 40%;
+  margin-left: 5px;
+}
+
+table {
+  width: 70%;
+}
+
+@media(maxwidth:"700px") {
+  .form-group {
+    width: 95%;
+  }
+}

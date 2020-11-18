@@ -1,0 +1,265 @@
+﻿<div ng-controller="editVehicleCtrl">
+    <div ng-show="vehicleEditMsg" class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Data updated.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="card">
+        <div class="card-header"> <h4 class="card-subtitle">Edit Vehicle</h4></div>
+        <div class="card-body">
+            <div class="card-text">
+                <form name="frmEditVehicle" id="frmEditVehicle" ng-submit="editDone(frmEditVehicle)" novalidate>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Make By</label>
+                        <div class="col-3">
+                            <input name="makeBy"
+                                   ng-model="vehicleToEdit.MakeBy"
+                                   class="form-control form-control-sm"
+                                   required />
+                            <div ng-messages="frmEditVehicle.makeBy.$error"
+                                 ng-show="frmEditVehicle.makeBy.$invalid && !frmEditVehicle.makeBy.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Make by is requred.
+                                </div>
+                            </div>
+                        </div>
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Color</label>
+                        <div class="col-3">
+                            <select name="color"
+                                    class="form-control form-control-sm"
+                                    ng-model="vehicleToEdit.Color">
+                                <option value="">-Not Defined-</option>
+                                <option value="Red">Red</option>
+                                <option value="Black">Black</option>
+                                <option value="White">White</option>
+                                <option value="Green">Green</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Blue">Blue</option>
+                                <option value="Brown">Brown</option>
+                                <option value="Orange">Orange</option>
+                                <option value="Pink">Pink</option>
+                                <option value="Purple">Purple</option>
+                                <option value="Grey">Grey</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Mileage</label>
+                        <div class="col-3">
+                            <input name="mileage"
+                                   ng-model="vehicleToEdit.Mileage"
+                                   class="form-control form-control-sm"
+                                   type="number"
+                                   required />
+                            <div ng-messages="frmEditVehicle.mileage.$error"
+                                 ng-show="frmEditVehicle.mileage.$invalid && !frmEditVehicle.mileage.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Mileage is requred.
+                                </div>
+                            </div>
+                        </div>
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Condition</label>
+                        <div class="col-3">
+                            <select name="condition"
+                                    class="form-control form-control-sm"
+                                    ng-model="vehicleToEdit.Condition">
+                                <option value="">-Not Defined-</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Very good">Very good</option>
+                                <option value="Good">Good</option>
+                                <option value="Fair">Fair</option>
+                                <option value="Clean">Clean</option>
+                                <option value="Average">Average</option>
+                                <option value="Rough">Rough</option>
+                                <option value="Damaged">Damaged</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Make Date</label>
+                        <div class="col-3">
+                            <div class="input-group">
+                                <input name="makeDate"
+                                       ng-model="vehicleToEdit.MakeDate"
+                                       class="form-control form-control-sm"
+                                       required
+                                       uib-datepicker-popup="yyyy-MM-dd"
+                                       is-open="popup2.opened"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button"
+                                            class="btn btn-secondary btn-sm"
+                                            ng-click="open2()">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-messages="frmEditVehicle.mileage.$error"
+                                 ng-show="frmEditVehicle.makeDate.$invalid && !frmEditVehicle.makeDate.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Make date is requred.
+                                </div>
+                            </div>
+                        </div>
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">VIN Number</label>
+                        <div class="col-3">
+                            <input name="VINNumber"
+                                   ng-model="vehicleToEdit.VINNumber"
+                                   class="form-control form-control-sm"
+                                   required />
+                            <div ng-messages="frmEditVehicle.VINNumber.$error"
+                                 ng-show="frmEditVehicle.VINNumber.$invalid && !frmEditVehicle.VINNumber.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    VIN number is requred.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Note</label>
+                        <div class="col-3">
+                            <textarea name="note"
+                                      ng-model="vehicleToEdit.Note"
+                                      class="form-control form-control-sm"></textarea>
+                        </div>
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Is Hold?</label>
+                        <div class="col-3">
+                            <div class="input-group mt-2">
+                                <input type="checkbox" name="isHold"
+                                       ng-model="vehicleToEdit.IsHold" />
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="card-subtitle">Edit Service Record</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Service By</th>
+                                <th>Service Charge</th>
+                                <th>Condition Descr.</th>
+                                <th>Is Delivered?</th>
+                                <th style="width:90px" class="text-center">
+                                    <button type="button" class="btn btn-success btn-sm" ng-click="openAddServiceDialog()"><span class="fa fa-plus"></span></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in vehicleToEdit.ServiceRecord">
+                                <td>
+                                    <input name="serviceBy[{{$index}}]"
+                                           class="form-control form-control-sm"
+                                           ng-model="item.ServiceBy"
+                                           required />
+                                    <div ng-messages="frmEditVehicle['serviceBy[' + $index + ']'].$error"
+                                         ng-show="frmEditVehicle['serviceBy[' + $index + ']'].$invalid && !frmEditVehicle['serviceBy[' + $index + ']'].$pristine">
+                                        <div class="text-danger" ng-message="required">
+                                            Service by is required.
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input name="serviceCharge[{{$index}}]"
+                                           type="number"
+                                           class="form-control form-control-sm"
+                                           ng-model="item.ServiceCharge"
+                                           required />
+                                    <div ng-messages="frmEditVehicle['serviceCharge[' + $index + ']'].$error"
+                                         ng-show="frmEditVehicle['serviceCharge[' + $index + ']'].$invalid && !frmEditVehicle['serviceCharge[' + $index + ']'].$pristine">
+                                        <div class="text-danger" ng-message="required">
+                                            Service charge is required.
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <textarea name="conditionDescr[{{$index}}]"
+                                              rows="2"
+                                              class="form-control form-control-sm"
+                                              ng-model="item.ConditionDescr"></textarea>
+
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="isHold"
+                                           ng-model="item.IsDelivered" />
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" ng-click="delService($index)" class="btn btn-danger btn-sm mt-2"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex align-items-baseline">
+                <a ng-href="#!/vehicle"><i class="fa fa-reply" aria-hidden="true"></i> Back to car list</a>
+                <span style="flex:auto"></span>
+                <button type="submit" class="btn btn-success btn-sm" ng-disabled="frmEditVehicle.$invalid" form="frmEditVehicle">Update <i class="fa fa-retweet" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- new service Modal -->
+    <div class="modal fade" id="addServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new service record.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="frmServiceModal" id="frmServiceModal" ng-submit="AddServiceModal(frmServiceModal)" novalidate>
+
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm">Service By</label>
+                            <input name="serviceBy"
+                                   class="form-control form-control-sm"
+                                   ng-model="newServiceModal.ServiceBy"
+                                   required />
+                            <div ng-messages="frmServiceModal.serviceBy.$error"
+                                 ng-show="frmServiceModal.serviceBy.$invalid && !frmServiceModal.serviceBy.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Service by is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm">Service Charge</label>
+                            <input name="serviceCharge"
+                                   type="number"
+                                   class="form-control form-control-sm"
+                                   ng-model="newServiceModal.ServiceCharge"
+                                   required />
+                            <div ng-messages="frmServiceModal.serviceCharge.$error"
+                                 ng-show="frmServiceModal.serviceCharge.$invalid && !frmServiceModal.serviceCharge.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Service charge is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm">Condition Descr.</label>
+                            <textarea name="conditionDescr"
+                                      rows="2"
+                                      class="form-control form-control-sm"
+                                      ng-model="newServiceModal.ConditionDescr"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-sm">is Hold?</label>
+                            <input type="checkbox" name="isHold"
+                                   ng-model="newServiceModal.IsDelivered" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <button type="submit" class="btn btn-success btn-sm" form="frmServiceModal" ng-disabled="frmServiceModal.$invalid"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

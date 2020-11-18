@@ -1,0 +1,97 @@
+﻿<div ng-controller="createServiceCtrl">
+    <div ng-show="newServiceMsg" class="alert alert-info alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Data inserted.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Add new service</h4>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                <form name="frmServiceSingle" id="frmServiceSingle"
+                      ng-submit="ServiceCreateDone(frmServiceSingle)"
+                      novalidate>
+                    <div class="form-group row">
+                        <label class="col-form-label col-form-label-sm col-2 text-right">Vehicle-VINNumber</label>
+                        <div class="col-4">
+                            <select name="vehicleId" ng-options="item.vehicle.VehicleId as item.vehicle.VINNumber for item in model.vehicles" class="form-control form-control-sm" ng-model="currentServiceSingle.VehicleId" required>
+                                <option value="">Select</option>
+                            </select>
+                            <div class="text-danger" ng-show="frmServiceSingle.vehicleId.$error" ng-if="!frmServiceSingle.vehicleId.$pristine">
+                                <div ng-show="frmServiceSingle.vehicleId.$error.required">Vehicle is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-form-label-sm col-2 text-right">Service By</label>
+                        <div class="col-4">
+                            <input name="serviceBy"
+                                   class="form-control form-control-sm"
+                                   ng-model="currentServiceSingle.ServiceBy"
+                                   required />
+                            <div ng-messages="frmServiceSingle.serviceBy.$error"
+                                 ng-show="frmServiceSingle.serviceBy.$invalid && !frmServiceSingle.serviceBy.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    service by is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Service Charge</label>
+                        <div class="col-4">
+                            <input name="serviceCharge"
+                                   type="number"
+                                   class="form-control form-control-sm"
+                                   ng-model="currentServiceSingle.ServiceCharge"
+                                   required />
+                            <div ng-messages="frmServiceSingle.serviceCharge.$error"
+                                 ng-show="frmServiceSingle.serviceCharge.$invalid && !frmServiceSingle.serviceCharge.$pristine">
+                                <div class="text-danger" ng-message="required">
+                                    Service charge required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Condition Descr.</label>
+                        <div class="col-4">
+                            <textarea name="conditionDescr"
+                                      rows="2"
+                                      class="form-control form-control-sm"
+                                      ng-model="currentServiceSingle.ConditionDescr"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-form-label col-form-label-sm col-2 text-right">Is Delivered?</label>
+                        <div class="col-4">
+                            <input type="checkbox" name="isDelivered"
+                                   class="mt-2"
+                                   ng-model="currentServiceSingle.IsDelivered" />
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2 text-left offset-3">
+                            <a class="btn-link" href="#!/vehicle"><i class="fa fa-reply"></i> Back to car list</a>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit"
+                                    class="btn btn-primary btn-sm"
+                                    ng-disabled="frmServiceSingle.$invalid">
+                                <i class="fa fa-save"> Save</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+
+   
+</div>

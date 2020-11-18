@@ -1,0 +1,53 @@
+<div fxLayout="column"
+   fxLayoutAlign="center center">
+  <mat-card class="full-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Services Record</mat-card-title>
+      <mat-card-subtitle>Services Catalog</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-table class="" [dataSource]="serviceDataSource" matSort>
+        <ng-container matColumnDef="ServiceBy">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Service By</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.ServiceBy}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ServiceCharge">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Service Charge</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.ServiceCharge| currency}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ConditionDescr">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Condition Descr.</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.ConditionDescr}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="IsDelivered">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Is Delivered?</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.IsDelivered? 'Yes':'No'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="VehicleId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Vehicle-VINNumber</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{getVehicleName(element.VehicleId)}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a mat-mini-fab [routerLink]="['/service-edit', element.ServiceRecordId]" color="accent-1"><mat-icon>edit</mat-icon></a>
+            <button mat-icon-button color="warn" (click)="confirmServiceDelete(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columnList"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnList;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+    </mat-card-content>
+    <mat-card-footer style="height:50px;">
+      <div style="position:absolute;right:20px;bottom:10px;">
+        <button [routerLink]="['/service-add']" mat-mini-fab class="right" color="warn" aria-label="Example icon button with a filter list icon">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+
+</div>

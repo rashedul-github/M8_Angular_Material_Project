@@ -1,0 +1,116 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Create New Vehicle</mat-card-title>
+    <mat-card-subtitle>Fill up the form</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="form-container">
+    <form [formGroup]="vihicleForm" class="form-group" (ngSubmit)="onSubmit()">
+      <mat-form-field class="f-w">
+        <mat-label>Make By</mat-label>
+        <input matInput formControlName="MakeBy">
+        <mat-error *ngIf="vihicleForm.get('MakeBy').touched && vihicleForm.get('MakeBy').hasError('required')">Make by required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="f-w">
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="Color">
+
+      </mat-form-field>
+      <mat-form-field class="f-w">
+        <mat-label>Condition</mat-label>
+        <input matInput formControlName="Condition">
+
+      </mat-form-field>
+      <mat-form-field class="input-f-w">
+        <mat-label>Make Date</mat-label>
+        <input matInput formControlName="MakeDate" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="vihicleForm.get('MakeDate').touched && vihicleForm.get('MakeDate').hasError('required')">Make date required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="f-w">
+        <mat-label>Mileage</mat-label>
+        <input type="number" matInput formControlName="Mileage">
+        <mat-error *ngIf="vihicleForm.get('Mileage').touched && vihicleForm.get('Mileage').hasError('required')">Mileage required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="f-w">
+        <mat-label>VINNumber</mat-label>
+        <input matInput formControlName="VINNumber">
+        <mat-error *ngIf="vihicleForm.get('VINNumber').touched && vihicleForm.get('VINNumber').hasError('required')">VINNumber required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="f-w">
+        <mat-label>Note</mat-label>
+        <input matInput formControlName="Note">
+        <mat-error *ngIf="vihicleForm.get('Note').touched && vihicleForm.get('VINNumber').hasError('required')">Note required.</mat-error>
+      </mat-form-field>
+      <div class="f-w">
+        <mat-checkbox formControlName="IsHold">Is Hold?</mat-checkbox>
+
+      </div>
+
+      <!-- For Courses-->
+
+      <div formArrayName="services">
+        <div class="f-w-2" *ngFor="let x of ServiceArray.controls;let i=index;" [formGroupName]="i">
+          <mat-form-field class="f-30">
+            <mat-label>Service By</mat-label>
+            <input matInput formControlName="ServiceBy">
+            <mat-error *ngIf="ServiceArray.controls[i].get('ServiceBy').touched && ServiceArray.controls[i].get('ServiceBy').hasError('required')">ServiceBy required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="f-30">
+            <mat-label>Service Charge</mat-label>
+            <input type="number" matInput formControlName="ServiceCharge">
+            <mat-error *ngIf="ServiceArray.controls[i].get('ServiceCharge').touched && ServiceArray.controls[i].get('ServiceCharge').hasError('required')">ServiceCharge required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="f-30">
+            <mat-label>Condition Descr.</mat-label>
+            <input matInput formControlName="ConditionDescr">
+
+          </mat-form-field>
+          <div class="f-30">
+            <mat-checkbox formControlName="IsDelivered">Is Delivered?</mat-checkbox>
+
+          </div>
+          <div class="f-30">
+            <button type="button" mat-icon-button (click)="removeServiceItem(i)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </div>
+
+      <div formArrayName="Newservices">
+        <div class="f-w-2" *ngFor="let x of NewServiceArray.controls;let i=index;" [formGroupName]="i">
+          <mat-form-field class="f-30">
+            <mat-label>Service By</mat-label>
+            <input matInput formControlName="ServiceBy">
+            <mat-error *ngIf="NewServiceArray.controls[i].get('ServiceBy').touched && NewServiceArray.controls[i].get('ServiceBy').hasError('required')">ServiceBy required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="f-30">
+            <mat-label>Service Charge</mat-label>
+            <input type="number" matInput formControlName="ServiceCharge">
+            <mat-error *ngIf="NewServiceArray.controls[i].get('ServiceCharge').touched && NewServiceArray.controls[i].get('ServiceCharge').hasError('required')">ServiceCharge required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="f-30">
+            <mat-label>Condition Descr.</mat-label>
+            <input matInput formControlName="ConditionDescr">
+
+          </mat-form-field>
+          <div class="f-30">
+            <mat-checkbox formControlName="IsDelivered">Is Delivered?</mat-checkbox>
+
+          </div>
+          <div class="f-30">
+            <button type="button" mat-icon-button (click)="addServiceToVehicle()" [disabled]="NewServiceArray.invalid"><mat-icon>add</mat-icon></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-w">
+        <button type="submit" mat-raised-button color="primary">Save Data</button>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-footer style="padding-bottom: 25px;">
+    <a mat-flat-button [routerLink]="['/vehicle']"><mat-icon>keyboard_arrow_left</mat-icon> Back to list</a>
+  </mat-card-footer>
+</mat-card>
+
+

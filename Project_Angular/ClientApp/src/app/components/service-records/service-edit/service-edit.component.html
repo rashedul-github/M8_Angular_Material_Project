@@ -1,0 +1,49 @@
+<div fxLayout="column"
+     fxLayoutAlign="center center">
+  <mat-card class="full-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Create New Service</mat-card-title>
+      <mat-card-subtitle>Fill up the form</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="column">
+          <mat-form-field class="pd">
+            <mat-label>Service By</mat-label>
+            <input matInput formControlName="ServiceBy">
+            <mat-error *ngIf="f.ServiceBy.touched && f.ServiceBy.hasError('required')">Service by required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="pd">
+            <mat-label>Service Charge</mat-label>
+            <input type="number" matInput formControlName="ServiceCharge">
+            <mat-error *ngIf="f.ServiceCharge.touched && f.ServiceCharge.hasError('required')">Service charge required.</mat-error>
+          </mat-form-field>
+          <div class="pd">
+            <mat-checkbox formControlName="IsDelivered">Is Delivered?</mat-checkbox>
+          </div>
+          <mat-form-field class="pd">
+            <mat-label>Vehicle-VINNumber</mat-label>
+
+            <mat-select formControlName="VehicleId">
+
+              <mat-option *ngFor="let op of vehicle" [value]="op.VehicleId">{{op.VINNumber}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="f.VehicleId.touched && f.VehicleId.hasError('required')">Vehicle-VINNumber is required.</mat-error>
+          </mat-form-field>
+          <mat-form-field class="pd">
+            <mat-label>Condition Descr.</mat-label>
+            <textarea matInput formControlName="ConditionDescr"></textarea>
+          </mat-form-field>
+          <div class="pd">
+            <button type="submit" mat-raised-button color="primary"><mat-icon>add</mat-icon></button>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
+    <mat-card-footer>
+      <a mat-flat-button [routerLink]="['/service']"><mat-icon>keyboard_arrow_left</mat-icon> Back to list</a>
+    </mat-card-footer>
+  </mat-card>
+</div>
+

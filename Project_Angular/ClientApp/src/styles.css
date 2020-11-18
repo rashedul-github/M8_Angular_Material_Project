@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.top-container {
+  margin: 10px 10px;
+  box-sizing: border-box;
+  width: 95%;
+}
+
+.full-card {
+  width: 70%;
+}
+
+.full-card-all {
+  width: 95%;
+}
+
+.card-form {
+  width: 50%;
+}
+
+.input-f-w {
+  padding: 10px 15px;
+  width: calc(100% - 30px);
+}

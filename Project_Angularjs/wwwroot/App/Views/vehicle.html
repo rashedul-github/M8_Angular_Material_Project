@@ -1,0 +1,84 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Vehicles with service records.</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="card-subtitle">Vehicles</h4>
+                <div class="card-text">
+                    <table class="table table-bordered">
+                        <thead class="bg-success text-white">
+                            <tr>
+                                <th></th>
+                                <th>Make By</th>
+                                <th>Make Date</th>
+                                <th>Color</th>
+                                <th>Condition</th>
+                                <th>Mileage</th>
+                                <th>VIN Number</th>
+                                <th>Note</th>
+                                <th>Is Hold?</th>
+                                <th>
+                                    <a class="btn btn-sm" ng-href="#!/createVehicle" style="color:blue;">Add <i class="fa fa-external-link"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="data in model.vehicles">
+                            <tr>
+                                <td>
+                                    <button ng-if="!data.isExpanded" class="btn" ng-click="expandChild($index)"><i class="fa fa-plus"></i></button>
+                                    <button ng-if="data.isExpanded" class="btn" ng-click="expandChild($index)"><i class="fa fa-minus"></i></button>
+                                </td>
+                                <td>{{data.vehicle.MakeBy}}</td>
+                                <td>{{data.vehicle.MakeDate |date: 'dd-MMM-yyyy'}}</td>
+                                <td>{{data.vehicle.Color}}</td>
+                                <td>{{data.vehicle.Condition}}</td>
+                                <td>{{data.vehicle.Mileage}}</td>
+                                <td>{{data.vehicle.VINNumber}}</td>
+                                <td>{{data.vehicle.Note}}</td>
+                                <td>{{data.vehicle.IsHold ? 'Yes':'No'}}</td>
+                                <td style="width:150px;">
+                                    <a class="btn btn-sm" href="#!/editVehicle/{{data.vehicle.VehicleId}}" style="color:blue;">Edit <i class="fa fa-external-link"></i></a>
+                                    <button class="btn btn-sm" ng-click="deleteVehicle($index)" style="color:red;">Del <i class="fa fa-external-link"></i></button>
+                                </td>
+                            </tr>
+                            <tr ng-if="data.isExpanded">
+                                <td></td>
+                                <td colspan="9">
+                                    <h4 class="card-subtitle">Services Record</h4>
+                                    <table class="table table-primary">
+                                        <thead>
+                                            <tr>
+                                                <th>Service By</th>
+                                                <th>Service Charge</th>
+                                                <th>Condition Descr.</th>
+                                                <th>Is Delivered?</th>
+                                                <th>
+                                                    <a class="btn btn-outline-success btn-sm" ng-href="#!/createService"><i class="fa fa-plus"></i></a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="ser in data.vehicle.ServiceRecord">
+                                                <td>{{ser.ServiceBy}}</td>
+                                                <td>{{ser.ServiceCharge | currency:'৳ '}}</td>
+                                                <td>{{ser.ConditionDescr}}</td>
+                                                <td>{{ser.IsDelivered? 'Yes':'No'}}</td>
+                                                <td style="width:150px;">
+                                                    <a class="btn btn-outline-success btn-sm" ng-href="#!/editService/{{ser.ServiceRecordId}}"><i class="fa fa-pencil"></i></a>
+                                                    <a class="btn btn-outline-danger btn-sm" ng-click="deleteService(ser.VehicleId,ser.ServiceRecordId,$index)"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
